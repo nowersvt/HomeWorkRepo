@@ -1,0 +1,16 @@
+FROM golang:1.20.1-alpine AS builder
+WORKDIR /app
+COPY main.go ./
+RUN go build main.go
+
+FROM alpine
+
+RUN apk update && \
+    apk add apache2 && \
+    rm -rf /var/cache/apk/*
+COPY --from=builder /app/main /app/main
+
+EXPOSE 80
+EXPOSE 8003
+#CMD ["httpd", "-DFOREGROUND"]
+CMD /bin/sh -c "httpd -DFOREGROUND  & /app/main"
