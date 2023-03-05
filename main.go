@@ -9,7 +9,7 @@ import (
 )
 
 var bgColor string
-//
+
 func main() {
     hostname, _ := os.Hostname()
 
