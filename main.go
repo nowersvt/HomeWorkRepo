@@ -12,7 +12,7 @@ var bgColor string
 //comit by developer
 func main() {
     hostname, _ := os.Hostname()
-//comit 1
+
 //comit 2
 //comit 3
 //comit 4
