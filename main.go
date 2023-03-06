@@ -12,7 +12,7 @@ var bgColor string
 //comit by developer
 func main() {
     hostname, _ := os.Hostname()
-
+//comit 1
     colors := []string{"black", "blue", "orange"}
 
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
