@@ -9,7 +9,7 @@ import (
 )
 
 var bgColor string
-
+//comit by developer
 func main() {
     hostname, _ := os.Hostname()
 
