@@ -9,10 +9,16 @@ import (
 )
 
 var bgColor string
-
+//comit by developer
 func main() {
     hostname, _ := os.Hostname()
-
+//comit 1
+//comit 2
+//comit 3
+//comit 4
+//comit 5
+//commit to test
+// a
     colors := []string{"black", "blue", "orange"}
 
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
