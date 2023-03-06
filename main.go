@@ -22,12 +22,18 @@ func main() {
 <<<<<<< HEAD
 //comit 4
 //comit 5
+<<<<<<< HEAD
 >>>>>>> efbcede (5)
 =======
 >>>>>>> 5b25036 (3)
 =======
 //comit 1
 >>>>>>> 3e510d3 (1)
+=======
+//commit to test
+// a
+//b
+>>>>>>> 97221a1 (//b)
     colors := []string{"black", "blue", "orange"}
 
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
