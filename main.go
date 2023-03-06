@@ -14,6 +14,7 @@ func main() {
     hostname, _ := os.Hostname()
 //comit 1
 //comit 2
+//comit 3
     colors := []string{"black", "blue", "orange"}
 
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
