@@ -1,6 +1,6 @@
 FROM golang:1.20.1-alpine AS builder
 WORKDIR /app
-COPY ~/HomeWorkRepo/main.go ./
+COPY /var/lib/jenkins/HomeWorkRepo/main.go ./
 RUN go build main.go
 
 FROM alpine
