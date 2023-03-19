@@ -1,9 +1,8 @@
 FROM alpine
+
 RUN apk update && \
     apk add nginx && \
     rm -rf /var/cache/apk/
-
-RUN sleep 20 
 
 RUN mkdir -p /etc/nginx/
 COPY nginx.conf /etc/nginx/nginx.conf
@@ -12,12 +11,12 @@ COPY index.html /usr/share/nginx/html/index.html
 
 EXPOSE 80
 
-RUN --mount=type=cache,target=/var/cache/docker-build-cache \
-    sleep 20
+VOLUME /var/cache/docker-build-cache 
 
 RUN sleep 20
 
 CMD nginx -g 'daemon off;'
+
 #./nginx.conf:/etc/nginx/nginx.conf
 #      - ./music:/usr/share/nginx/html/music
 #      - ./index.html:/usr/share/nginx/html/index.html
