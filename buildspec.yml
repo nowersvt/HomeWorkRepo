@@ -1,0 +1,44 @@
+--- #--------------------------------------------------------------
+#--------------------------------------------------------------
+# Simple AWS CodeBuild Config File
+#
+# Copyleft (c) by Denis Astahov
+version: 0.2
+
+env:
+  variables:
+    AWS_DEFAULT_REGION: "us-east-1"
+
+phases:
+  install:
+    commands:
+      - echo "Check aws and git version"
+      - aws --version
+      - git --version
+      - apt update -y
+
+  pre_build:
+    commands:
+      - echo "Login to AWS ECR and get commit id"
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/d9i2w2l9
+      - COMMIT_ID=$(git rev-parse --short HEAD)
+
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker build -t nowanginx .
+      - docker tag nowanginx:latest public.ecr.aws/d9i2w2l9/nowanginx:latest
+
+  post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - docker push nowanginx:latest public.ecr.aws/d9i2w2l9/nowanginx:latest
+      - sudo ssh -o StrictHostKeyChecking=no -i "/home/ubuntu/.ssh/dznowa.pem" ubuntu@ec2-100-25-35-186.compute-1.amazonaws.com <<EOF
+        sudo apt update -y
+        sudo apt install docker.io -y
+        sudo docker pull public.ecr.aws/d9i2w2l9/nowanginx:latest
+        sudo docker stop nowanginx && sudo docker rm nowanginx
+        sudo systemctl restart docker
+        sudo docker run -d --name nginx -p 80:80 public.ecr.aws/d9i2w2l9/nowanginx:latest
+        sudo docker run -d --name golangsite -p 8003:8003 public.ecr.aws/d9i2w2l9/nowanginx:latest
+        EOF
