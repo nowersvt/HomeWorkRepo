@@ -28,11 +28,13 @@ phases:
       - echo Building the Docker image...
       - docker build -t nowanginx .
       - docker tag nowanginx:latest public.ecr.aws/d9i2w2l9/nowanginx:latest
+      - docker tag nowanginx:latest public.ecr.aws/d9i2w2l9/nowanginx:latest:$COMMIT_ID
 
   post_build:
     commands:
       - echo Pushing the Docker image...
       - docker push nowanginx:latest public.ecr.aws/d9i2w2l9/nowanginx:latest
+      - docker push nowanginx:latest public.ecr.aws/d9i2w2l9/nowanginx:latest:$COMMIT_ID
       - sudo ssh -o StrictHostKeyChecking=no -i "/home/ubuntu/.ssh/dznowa.pem" ubuntu@ec2-100-25-35-186.compute-1.amazonaws.com <<EOF
         sudo apt update -y
         sudo apt install docker.io -y
